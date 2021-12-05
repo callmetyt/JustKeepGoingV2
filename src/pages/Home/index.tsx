@@ -1,21 +1,21 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Button} from 'react-native-elements';
-import {} from '@react-navigation/native';
-import {ScreenNavigationProp} from '../../types';
+import {View, StyleSheet} from 'react-native';
+import InfoArea from './components/InfoArea';
+import MainAction from './components/MainAction';
 
-export function Home({navigation}: {navigation: ScreenNavigationProp}) {
+export function Home() {
   return (
-    <View>
-      <Text>home page</Text>
-      <Button
-        title="to user page"
-        onPress={() => {
-          navigation.navigate('User');
-        }}
-      />
+    <View style={style.container}>
+      <MainAction />
+      <InfoArea />
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  container: {
+    height: '100%',
+  },
+});
 
 export default Home;
