@@ -1,12 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../../store';
+import {useAppSelector} from '@src/hooks';
 import Ripple from './ripple';
 
 export const MainAction = () => {
-  const focusData = useSelector((state: RootState) => state);
+  const focusData = useAppSelector(state => state);
   const handleFoucsBtn = () => {
     console.log('click foucs btn!');
     console.log(focusData);

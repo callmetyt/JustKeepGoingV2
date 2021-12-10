@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Card, Input} from 'react-native-elements';
-import {useDispatch} from 'react-redux';
-import {addInfo, FocusInfoType} from '../../../../store/reducer/focus';
+import {useAppDispatch} from '@src/hooks';
+import {addInfo, FocusInfoType} from '@src/store/reducer/focus';
 
 export const InfoArea = () => {
   const [inputData, setInputData] = useState<FocusInfoType>({aim: ''});
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const updateStoreData = (data: FocusInfoType) => {
     dispatch(addInfo(data));
