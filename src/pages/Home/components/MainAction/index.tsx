@@ -3,12 +3,14 @@ import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useAppSelector} from '@src/hooks';
 import Ripple from './ripple';
+import api from '@api/index';
 
 export const MainAction = () => {
   const focusData = useAppSelector(state => state);
   const handleFoucsBtn = () => {
     console.log('click foucs btn!');
     console.log(focusData);
+    api.focusListAdd(focusData);
   };
 
   return (
@@ -21,6 +23,7 @@ export const MainAction = () => {
         buttonStyle={style.focusBtn}
         titleStyle={style.focusText}
       />
+
       <Ripple />
     </View>
   );

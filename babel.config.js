@@ -9,6 +9,8 @@ module.exports = {
         alias: {
           '@src': './src/',
           '@pages': './src/pages/',
+          '@api': './src/api/',
+          '@config': './src/config/',
         },
       },
     ],
