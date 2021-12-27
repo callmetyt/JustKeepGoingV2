@@ -4,13 +4,19 @@ import {Button} from 'react-native-elements';
 import {useAppSelector} from '@src/hooks';
 import Ripple from './ripple';
 import api from '@api/index';
+import {ScreenNavigationProp} from '@src/types';
 
-export const MainAction = () => {
+interface MainActionProps {
+  navigation: ScreenNavigationProp;
+}
+
+export const MainAction = ({navigation}: MainActionProps) => {
   const focusData = useAppSelector(state => state);
-  const handleFoucsBtn = () => {
-    console.log('click foucs btn!');
-    console.log(focusData);
-    api.focusListAdd(focusData);
+  const handleFoucsBtn = async () => {
+    const apiRes = await api.focusListAdd(focusData);
+    if (apiRes) {
+      navigation.navigate('Focus');
+    }
   };
 
   return (

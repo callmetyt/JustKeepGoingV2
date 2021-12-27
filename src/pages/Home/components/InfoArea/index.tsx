@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Card, Input} from 'react-native-elements';
-import {useAppDispatch} from '@src/hooks';
+import {useAppDispatch, useAppSelector} from '@src/hooks';
 import {addInfo, FocusInfoType} from '@src/store/reducer/focus';
 
 export const InfoArea = () => {
-  const [inputData, setInputData] = useState<FocusInfoType>({aim: ''});
-
+  const focusData = useAppSelector(state => state);
   const dispatch = useAppDispatch();
 
   const updateStoreData = (data: FocusInfoType) => {
@@ -20,17 +19,11 @@ export const InfoArea = () => {
         <Input
           placeholder="目的"
           autoCompleteType="aim"
-          value={inputData.aim}
+          value={focusData.aim}
           onChangeText={(value: string) => {
-            setInputData(pre => {
-              updateStoreData({
-                ...pre,
-                aim: value,
-              });
-              return {
-                ...pre,
-                aim: value,
-              };
+            updateStoreData({
+              ...focusData,
+              aim: value,
             });
           }}
         />

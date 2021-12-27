@@ -1,12 +1,13 @@
+import {ScreenNavigationProp} from '@src/types';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import InfoArea from './components/InfoArea';
 import MainAction from './components/MainAction';
 
-export function Home() {
+export function Home({navigation}: {navigation: ScreenNavigationProp}) {
   return (
     <View style={style.container}>
-      <MainAction />
+      <MainAction navigation={navigation} />
       <InfoArea />
     </View>
   );
