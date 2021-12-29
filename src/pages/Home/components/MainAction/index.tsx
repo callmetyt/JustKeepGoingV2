@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {useAppSelector} from '@src/hooks';
 import Ripple from './ripple';
-import api from '@api/index';
 import {ScreenNavigationProp} from '@src/types';
+import {useAppSelector, useAppDispatch} from '@src/hooks';
+import hasVal from '@utils/hasVal';
+import {addInfo} from '@src/store/reducer/focus';
 
 interface MainActionProps {
   navigation: ScreenNavigationProp;
@@ -12,10 +13,20 @@ interface MainActionProps {
 
 export const MainAction = ({navigation}: MainActionProps) => {
   const focusData = useAppSelector(state => state);
-  const handleFoucsBtn = async () => {
-    const apiRes = await api.focusListAdd(focusData);
-    if (apiRes) {
+  const dispatch = useAppDispatch();
+
+  const handleFoucsBtn = () => {
+    if (hasVal(focusData.aim)) {
+      // 设置专注开始时间
+      dispatch(
+        addInfo({
+          ...focusData,
+          startDate: Date.now(),
+        }),
+      );
       navigation.navigate('Focus');
+    } else {
+      Alert.alert('', '专注目的未填写!');
     }
   };
 

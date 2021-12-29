@@ -11,6 +11,7 @@ module.exports = {
           '@pages': './src/pages/',
           '@api': './src/api/',
           '@config': './src/config/',
+          '@utils': './src/utils',
         },
       },
     ],

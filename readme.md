@@ -9,8 +9,7 @@
   - 页面跳转（类似web中的router）：react-navigation
   - 状态管理：redux-toolkit
 ## 进度
-- 尝试React-native提供的Animate组件实现简单的动画
-  - 想想过渡动画怎么实现
-- 整合Redux-toolkit，构建初始目录结构，并实际测试状态管理
-  - 想想表单状态更新是否存在优化，目前是onChangeText事件同步修改store
+- 专注页面优化
+- 专注信息展示
+- 专注信息上传失败后的重传
 - 后续需要时间输入，尝试接入react-native-datetimepicker
