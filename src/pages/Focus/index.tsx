@@ -1,8 +1,7 @@
 import {focusListAdd} from '@src/api/focusListAdd';
-import {useAppDispatch, useAppSelector} from '@src/hooks';
-import {addInfo} from '@src/store/reducer/focus';
+import {useAppSelector} from '@src/hooks';
 import {ScreenNavigationProp} from '@src/types';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 
@@ -15,18 +14,16 @@ export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
   }, [navigation]);
 
   const focusData = useAppSelector(state => state);
-  const dispatch = useAppDispatch();
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const handleEndFocus = async () => {
-    // 存储结束时间
-    dispatch(
-      addInfo({
-        ...focusData,
-        endDate: Date.now(),
-      }),
-    );
+    setLoadingBtn(true);
 
-    await focusListAdd(focusData);
+    await focusListAdd({
+      ...focusData,
+      endDate: Date.now(), // dispatch执行后这里的focusData并未修改，还是原来的
+    });
+    setLoadingBtn(false);
 
     navigation.goBack();
   };
@@ -38,6 +35,9 @@ export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
         onPress={() => {
           handleEndFocus();
         }}
+        buttonStyle={style.btn}
+        titleStyle={style.btnText}
+        loading={loadingBtn}
       />
     </View>
   );
@@ -49,6 +49,15 @@ const style = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  btn: {
+    borderRadius: 10,
+    height: 75,
+    width: 150,
+    backgroundColor: '#ff4757',
+  },
+  btnText: {
+    fontSize: 20,
   },
 });
 

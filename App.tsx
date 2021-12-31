@@ -8,6 +8,7 @@ import User from '@pages/User';
 import Focus from '@pages/Focus';
 import {Provider} from 'react-redux';
 import store from './src/store';
+import History from '@src/pages/History';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const App = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="Focus" component={Focus} />
+            <Stack.Screen name="History" component={History} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

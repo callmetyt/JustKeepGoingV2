@@ -10,6 +10,6 @@
   - 状态管理：redux-toolkit
 ## 进度
 - 专注页面优化
-- 专注信息展示
+- 专注信息展示页面优化
 - 专注信息上传失败后的重传
 - 后续需要时间输入，尝试接入react-native-datetimepicker

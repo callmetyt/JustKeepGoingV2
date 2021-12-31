@@ -57,6 +57,7 @@ const style = StyleSheet.create({
   focusBtn: {
     borderRadius: 10,
     padding: 20,
+    backgroundColor: '#2ed573',
   },
   focusText: {
     fontSize: 20,
