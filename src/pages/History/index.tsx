@@ -1,35 +1,50 @@
-import {focusListGetAll} from '@src/api/focusListGetAll';
+import {focusListGetAll} from '@api/focusListGetAll';
 import {FocusInfoType} from '@src/store/reducer/focus';
-import format from '@utils/format';
 import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {Card} from 'react-native-elements';
+import {StyleSheet, Text, View} from 'react-native';
+import ListCardItem from './components/listCardItem';
 
 export const History = () => {
   const [list, setList] = useState<Array<FocusInfoType>>([]);
 
   useEffect(() => {
-    async function getData() {
-      const listData = await focusListGetAll();
-      setList(listData);
-    }
-    getData();
+    refreshData();
   }, []);
 
+  const refreshData = async () => {
+    const listData = await focusListGetAll();
+    setList(listData);
+  };
+
   return (
-    <View>
-      {list.map((item, index) => {
-        return (
-          <Card key={index}>
-            <Card.Title>专注目的:{item.aim}</Card.Title>
-            <Text>
-              时长: {format(item.endDate - item.startDate, 'hh小时mm分钟ss秒')}
-            </Text>
-          </Card>
-        );
-      })}
+    <View style={style.container}>
+      {list.length ? (
+        list.map((item, index) => {
+          return (
+            <ListCardItem
+              item={item}
+              index={index}
+              refreshData={refreshData}
+              key={index}
+            />
+          );
+        })
+      ) : (
+        <Text style={style.noneListText}>暂无专注记录</Text>
+      )}
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  noneListText: {
+    marginTop: 30,
+    fontSize: 20,
+  },
+});
 
 export default History;

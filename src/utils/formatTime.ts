@@ -1,4 +1,4 @@
-export default function format(ms: number, pattern?: string) {
+export default function formatTime(ms: number, pattern?: string) {
   const second = Math.floor(ms / 1000) % 60;
   const minute = Math.floor(ms / 1000 / 60) % 60;
   const hour = Math.floor(ms / 1000 / 60 / 60);
