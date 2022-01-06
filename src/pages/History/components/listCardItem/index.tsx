@@ -1,18 +1,17 @@
 import {FocusInfoType} from '@src/store/reducer/focus';
 import React from 'react';
 import {focusListDeleteOne} from '@api/focusListDeleteOne';
-import {StyleSheet, Text, View, Alert} from 'react-native';
+import {StyleSheet, Text, View, Alert, Share} from 'react-native';
 import {Card, Icon} from 'react-native-elements';
 import formatDate from '@utils/formatDate';
 import formatTime from '@utils/formatTime';
 
 interface ListCardItemProps {
   item: FocusInfoType;
-  index: number;
   refreshData: () => Promise<void>;
 }
 
-export const ListCardItem = ({item, index, refreshData}: ListCardItemProps) => {
+export const ListCardItem = ({item, refreshData}: ListCardItemProps) => {
   const handleDeleteIcon = async (data: FocusInfoType) => {
     Alert.alert('提示', '是否删除该条专注记录', [
       {
@@ -28,14 +27,35 @@ export const ListCardItem = ({item, index, refreshData}: ListCardItemProps) => {
     ]);
   };
 
+  const handleShareIcon = async (data: FocusInfoType) => {
+    try {
+      await Share.share({
+        message: `已在${data.aim}专注${formatTime(
+          item.endDate - item.startDate,
+          'hh小时mm分钟',
+        )}`,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <Card key={index} containerStyle={style.card}>
+    <Card containerStyle={style.card}>
       <Card.Title>专注目的:{item.aim}</Card.Title>
       <Text>开始时间: {formatDate(item.startDate)}</Text>
       <Text>
         时长: {formatTime(item.endDate - item.startDate, 'hh小时mm分钟ss秒')}
       </Text>
       <View style={style.actionGroup}>
+        <Icon
+          name="share"
+          raised
+          tvParallaxProperties={{}}
+          onPress={() => {
+            handleShareIcon(item);
+          }}
+        />
         <Icon
           name="delete"
           raised
@@ -51,11 +71,14 @@ export const ListCardItem = ({item, index, refreshData}: ListCardItemProps) => {
 
 const style = StyleSheet.create({
   card: {
-    width: '85%',
+    width: '84%',
+    marginLeft: '8%',
+    marginRight: '8%',
   },
   actionGroup: {
     display: 'flex',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });
 

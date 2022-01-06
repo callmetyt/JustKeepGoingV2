@@ -1,37 +1,45 @@
 import {focusListGetAll} from '@api/focusListGetAll';
 import {FocusInfoType} from '@src/store/reducer/focus';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import ListCardItem from './components/listCardItem';
 
 export const History = () => {
   const [list, setList] = useState<Array<FocusInfoType>>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     refreshData();
   }, []);
 
   const refreshData = async () => {
+    setRefreshing(true);
     const listData = await focusListGetAll();
     setList(listData);
+    setRefreshing(false);
   };
 
   return (
     <View style={style.container}>
-      {list.length ? (
-        list.map((item, index) => {
-          return (
-            <ListCardItem
-              item={item}
-              index={index}
-              refreshData={refreshData}
-              key={index}
-            />
-          );
-        })
-      ) : (
-        <Text style={style.noneListText}>暂无专注记录</Text>
-      )}
+      <FlatList
+        style={style.flatList}
+        data={list}
+        renderItem={({item}) => {
+          return <ListCardItem item={item} refreshData={refreshData} />;
+        }}
+        refreshing={refreshing}
+        onRefresh={() => {
+          refreshData();
+        }}
+        ListEmptyComponent={() => (
+          <Text style={style.listText}>暂无专注记录</Text>
+        )}
+        ListFooterComponent={() => {
+          return list.length > 4 ? (
+            <Text style={style.listText}>已经到底了哦~</Text>
+          ) : null;
+        }}
+      />
     </View>
   );
 };
@@ -41,9 +49,13 @@ const style = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  noneListText: {
+  flatList: {
+    width: '100%',
+  },
+  listText: {
     marginTop: 30,
     fontSize: 20,
+    textAlign: 'center',
   },
 });
 
