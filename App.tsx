@@ -2,13 +2,12 @@ import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import Home from '@pages/Home';
-import User from '@pages/User';
-import Focus from '@pages/Focus';
 import {Provider} from 'react-redux';
 import store from './src/store';
-import History from '@src/pages/History';
+
+import Focus from '@pages/Focus';
+import Login from '@pages/Login';
+import HomeTab from '@pages/HomeTab';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,10 +17,15 @@ const App = () => {
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+              name="HomeTab"
+              component={HomeTab}
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="Focus" component={Focus} />
-            <Stack.Screen name="History" component={History} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

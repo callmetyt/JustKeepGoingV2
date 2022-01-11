@@ -13,7 +13,8 @@ export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
     });
   }, [navigation]);
 
-  const focusData = useAppSelector(state => state);
+  const focusData = useAppSelector(state => state.focus);
+  const usersToken = useAppSelector(state => state.users.token);
   const [loadingBtn, setLoadingBtn] = useState(false);
 
   const handleEndFocus = async () => {
@@ -22,6 +23,7 @@ export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
     await focusListAdd({
       ...focusData,
       endDate: Date.now(), // dispatch执行后这里的focusData并未修改，还是原来的
+      token: usersToken,
     });
     setLoadingBtn(false);
 

@@ -5,6 +5,7 @@ import {StyleSheet, Text, View, Alert, Share} from 'react-native';
 import {Card, Icon} from 'react-native-elements';
 import formatDate from '@utils/formatDate';
 import formatTime from '@utils/formatTime';
+import {useAppSelector} from '@src/hooks';
 
 interface ListCardItemProps {
   item: FocusInfoType;
@@ -12,12 +13,14 @@ interface ListCardItemProps {
 }
 
 export const ListCardItem = ({item, refreshData}: ListCardItemProps) => {
+  const token = useAppSelector(state => state.users.token);
+
   const handleDeleteIcon = async (data: FocusInfoType) => {
     Alert.alert('提示', '是否删除该条专注记录', [
       {
         text: '是',
         onPress: async () => {
-          await focusListDeleteOne(data);
+          await focusListDeleteOne({...data, token});
           await refreshData();
         },
       },

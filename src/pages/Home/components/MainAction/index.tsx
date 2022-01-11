@@ -5,21 +5,21 @@ import Ripple from './ripple';
 import {ScreenNavigationProp} from '@src/types';
 import {useAppSelector, useAppDispatch} from '@src/hooks';
 import hasVal from '@utils/hasVal';
-import {addInfo} from '@src/store/reducer/focus';
+import {updateFocusInfo} from '@src/store/reducer/focus';
 
 interface MainActionProps {
   navigation: ScreenNavigationProp;
 }
 
 export const MainAction = ({navigation}: MainActionProps) => {
-  const focusData = useAppSelector(state => state);
+  const focusData = useAppSelector(state => state.focus);
   const dispatch = useAppDispatch();
 
   const handleFoucsBtn = () => {
     if (hasVal(focusData.aim)) {
       // 设置专注开始时间
       dispatch(
-        addInfo({
+        updateFocusInfo({
           ...focusData,
           startDate: Date.now(),
         }),

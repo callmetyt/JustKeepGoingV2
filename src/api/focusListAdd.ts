@@ -2,7 +2,7 @@ import api from '@api/init';
 import {FocusInfoType} from '@src/store/reducer/focus';
 import {Alert} from 'react-native';
 
-export const focusListAdd = async (data: FocusInfoType) => {
+export const focusListAdd = async (data: FocusInfoType & {token: string}) => {
   const res = await api.post('/focusList/add', data).catch(e => {
     console.error(e);
   });

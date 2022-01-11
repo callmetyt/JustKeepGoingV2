@@ -9,4 +9,10 @@ export interface ScreenNavigationProp {
     type: 'focus' | 'blur' | 'beforeRemove' | 'state',
     event: (e: {data: any; target: any; preventDefault: () => void}) => void,
   ) => void;
+  replace: (name: string, params?: any) => void;
+}
+
+export interface usersLoginType {
+  userName: string;
+  password: string;
 }

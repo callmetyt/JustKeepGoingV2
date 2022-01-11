@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Card, Input} from 'react-native-elements';
 import {useAppDispatch, useAppSelector} from '@src/hooks';
-import {addInfo, FocusInfoType} from '@src/store/reducer/focus';
+import {FocusInfoType, updateFocusInfo} from '@src/store/reducer/focus';
 
 export const InfoArea = () => {
-  const focusData = useAppSelector(state => state);
+  const focusData = useAppSelector(state => state.focus);
   const dispatch = useAppDispatch();
 
   const updateStoreData = (data: FocusInfoType) => {
-    dispatch(addInfo(data));
+    dispatch(updateFocusInfo(data));
   };
 
   return (

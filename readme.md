@@ -10,6 +10,11 @@
   - 状态管理：redux-toolkit
 ## 进度
 - 专注页面优化
-- 专注信息展示页面优化
-- 专注信息上传失败后的重传
-- 专注历史分享功能
+- 登录界面完善
+  - 未输入的提示
+- token持久化
+  - react-native-storage接入
+- tab bottom适时隐藏
+  - keyboard调出时
+- tab bottom问题
+  - 历史视图跳转后没有更新，考虑navigation lifecycle？

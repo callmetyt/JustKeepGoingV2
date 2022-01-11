@@ -1,4 +1,4 @@
-import {createAction, createReducer} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 export interface FocusInfoType {
   aim: string;
@@ -6,22 +6,26 @@ export interface FocusInfoType {
   endDate: number;
 }
 
-export const addInfo = createAction<FocusInfoType>('ADD_INFO');
+const initialState: FocusInfoType = {
+  aim: '',
+  startDate: 0,
+  endDate: 0,
+};
 
-const focusReducer = createReducer<FocusInfoType>(
-  {
-    aim: '',
-    startDate: 0,
-    endDate: 0,
-  },
-  builder => {
-    builder.addCase(addInfo, (state, action) => {
+const focusSlice = createSlice({
+  name: 'focus',
+  initialState,
+  reducers: {
+    updateFocusInfo(state, action) {
       return {
         ...state,
         ...action.payload,
       };
-    });
+    },
   },
-);
+});
 
-export default focusReducer;
+const {actions, reducer} = focusSlice;
+export const {updateFocusInfo} = actions;
+
+export default reducer;
