@@ -11,10 +11,8 @@
 ## 进度
 - 专注页面优化
 - 登录界面完善
-  - 未输入的提示
+  - 记住密码功能
 - token持久化
   - react-native-storage接入
-- tab bottom适时隐藏
-  - keyboard调出时
-- tab bottom问题
-  - 历史视图跳转后没有更新，考虑navigation lifecycle？
+- 添加通用全局Modal
+- header 头部右边的用户头像

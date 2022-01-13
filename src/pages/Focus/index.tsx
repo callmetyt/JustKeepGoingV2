@@ -2,15 +2,37 @@ import {focusListAdd} from '@src/api/focusListAdd';
 import {useAppSelector} from '@src/hooks';
 import {ScreenNavigationProp} from '@src/types';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 
 export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
-  // 设置header
+  // 是否点击关闭按钮
+  let clickCloseBtn = false;
+
   useEffect(() => {
+    // 设置header
     navigation.setOptions({
       headerBackVisible: false,
     });
+    // 监听后退按钮
+    navigation.addListener('beforeRemove', e => {
+      if (!clickCloseBtn) {
+        // 拦截非结束按钮
+        e.preventDefault();
+        Alert.alert('提示', '是否撤销本次专注?', [
+          {
+            text: '是',
+            onPress: () => {
+              navigation.dispatch(e.data.action);
+            },
+          },
+          {
+            text: '否',
+          },
+        ]);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
 
   const focusData = useAppSelector(state => state.focus);
@@ -27,6 +49,7 @@ export const Focus = ({navigation}: {navigation: ScreenNavigationProp}) => {
     });
     setLoadingBtn(false);
 
+    clickCloseBtn = true;
     navigation.goBack();
   };
 

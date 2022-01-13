@@ -10,6 +10,7 @@ export interface ScreenNavigationProp {
     event: (e: {data: any; target: any; preventDefault: () => void}) => void,
   ) => void;
   replace: (name: string, params?: any) => void;
+  dispatch: (para: any) => void;
 }
 
 export interface usersLoginType {

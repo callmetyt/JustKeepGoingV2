@@ -1,7 +1,8 @@
 import {focusListGetAll} from '@api/focusListGetAll';
+import {useFocusEffect} from '@react-navigation/native';
 import {useAppSelector} from '@src/hooks';
 import {FocusInfoType} from '@src/store/reducer/focus';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import ListCardItem from './components/listCardItem';
 
@@ -10,10 +11,12 @@ export const History = () => {
   const [refreshing, setRefreshing] = useState(false);
   const token = useAppSelector(state => state.users.token);
 
-  useEffect(() => {
-    refreshData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      refreshData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const refreshData = async () => {
     setRefreshing(true);

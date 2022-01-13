@@ -2,8 +2,8 @@ import {usersLogin} from '@api/usersLogin';
 import {useAppDispatch} from '@src/hooks';
 import {updateUsersToken} from '@src/store/reducer/users';
 import {ScreenNavigationProp} from '@src/types';
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {createRef, useState} from 'react';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 
 export default function Login({
@@ -13,17 +13,25 @@ export default function Login({
 }) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const userNameInput = createRef<TextInput>();
+  const passwordInput = createRef<TextInput>();
   const dispatch = useAppDispatch();
 
   const handleLoginBtn = async () => {
-    const loginRes = await usersLogin({userName, password});
-    if (loginRes) {
-      dispatch(
-        updateUsersToken({
-          token: loginRes,
-        }),
-      );
-      navigation.replace('HomeTab');
+    if (!userName) {
+      (userNameInput.current as any).shake();
+    } else if (!password) {
+      (passwordInput.current as any).shake();
+    } else {
+      const loginRes = await usersLogin({userName, password});
+      if (loginRes) {
+        dispatch(
+          updateUsersToken({
+            token: loginRes,
+          }),
+        );
+        navigation.replace('HomeTab');
+      }
     }
   };
 
@@ -37,6 +45,7 @@ export default function Login({
           onChangeText={value => {
             setUserName(value);
           }}
+          ref={userNameInput}
         />
         <Input
           autoCompleteType="password"
@@ -45,6 +54,8 @@ export default function Login({
           onChangeText={value => {
             setPassword(value);
           }}
+          ref={passwordInput}
+          secureTextEntry={true}
         />
         <Button
           title="登录"

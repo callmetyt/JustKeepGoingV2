@@ -12,16 +12,17 @@ export default function HomeTab() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
-          console.log(route.name.toLowerCase());
           return (
             <Icon
               name={route.name.toLowerCase()}
               color={color}
               size={size}
               type="font-awesome-5"
+              tvParallaxProperties=""
             />
           );
         },
+        tabBarHideOnKeyboard: true,
       })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="History" component={History} />
