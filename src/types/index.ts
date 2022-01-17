@@ -13,6 +13,13 @@ export interface ScreenNavigationProp {
   dispatch: (para: any) => void;
 }
 
+export interface ScreenRouteProp {
+  key: string;
+  name: string;
+  path: string;
+  params: any;
+}
+
 export interface usersLoginType {
   userName: string;
   password: string;

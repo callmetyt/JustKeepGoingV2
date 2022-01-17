@@ -8,6 +8,7 @@ import store from './src/store';
 import Focus from '@pages/Focus';
 import Login from '@pages/Login';
 import HomeTab from '@pages/HomeTab';
+import Modal from '@pages/Modal';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,14 @@ const App = () => {
               }}
             />
             <Stack.Screen name="Focus" component={Focus} />
+            <Stack.Screen
+              name="Modal"
+              component={Modal}
+              options={{
+                presentation: 'transparentModal',
+                headerShown: false,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

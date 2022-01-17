@@ -23,7 +23,9 @@ export default function Login({
     } else if (!password) {
       (passwordInput.current as any).shake();
     } else {
+      navigation.navigate('Modal');
       const loginRes = await usersLogin({userName, password});
+      navigation.goBack();
       if (loginRes) {
         dispatch(
           updateUsersToken({
