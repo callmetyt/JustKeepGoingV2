@@ -8,11 +8,11 @@
   - UI库：react-native-elements
   - 页面跳转（类似web中的router）：react-navigation
   - 状态管理：redux-toolkit
+  - 数据持久化：react-native-async-storage
 ## 进度
-- 专注页面优化
-- 登录界面完善
-  - 记住密码功能
-- token持久化
-  - react-native-storage接入
-- 添加通用全局Modal
+- 专注页面优化——专注ing... 动画?
+- token设置时间？
+- Login解耦优化
+- Modal细分
 - header 头部右边的用户头像
+- 用户界面
