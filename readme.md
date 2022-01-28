@@ -14,5 +14,4 @@
 - token设置时间？
 - Login,User解耦优化
 - Modal细分
-- 用户信息接口
 - 头像?

@@ -1,3 +1,4 @@
+import {useAppSelector} from '@src/hooks';
 import {ScreenNavigationProp} from '@src/types';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
@@ -8,6 +9,8 @@ interface UserAvatarProps {
 }
 
 export default function UserAvatar({navigation}: UserAvatarProps) {
+  const usersName = useAppSelector(state => state.users.userName);
+
   const handleAvatarClick = () => {
     navigation.navigate('User');
   };
@@ -21,7 +24,7 @@ export default function UserAvatar({navigation}: UserAvatarProps) {
           handleAvatarClick();
         }}
       />
-      <Text style={style.text}>{'tyt'}</Text>
+      <Text style={style.text}>{usersName}</Text>
     </View>
   );
 }

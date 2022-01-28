@@ -1,12 +1,13 @@
 import {usersLogin} from '@api/usersLogin';
 import {useAppDispatch} from '@src/hooks';
-import {updateUsersToken} from '@src/store/reducer/users';
+import {updateUsersInfo} from '@store/reducer/users';
 import {ScreenNavigationProp} from '@src/types';
 import setTokenStorage from '@utils/setTokenStorage';
 import getTokenStorage from '@utils/getTokenStorage';
 import React, {createRef, useEffect, useState} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
+import {getUsersInfo} from '@api/getUserInfo';
 
 export default function Login({
   navigation,
@@ -22,16 +23,28 @@ export default function Login({
   useEffect(() => {
     async function autoLogin() {
       navigation.navigate('Modal');
+      // 获取本地token
       const token = await getTokenStorage();
-      navigation.goBack();
       if (token) {
-        dispatch(
-          updateUsersToken({
-            token,
-          }),
-        );
-        navigation.replace('HomeTab');
+        // 获取用户信息
+        const usersInfo = await getUsersInfo({token});
+        if (usersInfo) {
+          // 保存用户信息
+          dispatch(
+            updateUsersInfo({
+              ...usersInfo,
+            }),
+          );
+          // 跳转
+          navigation.goBack();
+          navigation.replace('HomeTab');
+          return;
+        } else {
+          // token错误，重新登录
+          await setTokenStorage('');
+        }
       }
+      navigation.goBack();
     }
     autoLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,10 +60,10 @@ export default function Login({
       const loginRes = await usersLogin({userName, password});
       navigation.goBack();
       if (loginRes) {
-        await setTokenStorage(loginRes);
+        await setTokenStorage(loginRes.token);
         dispatch(
-          updateUsersToken({
-            token: loginRes,
+          updateUsersInfo({
+            ...loginRes,
           }),
         );
         navigation.replace('HomeTab');

@@ -1,3 +1,4 @@
+import {useAppSelector} from '@src/hooks';
 import {ScreenNavigationProp} from '@src/types';
 import setTokenStorage from '@utils/setTokenStorage';
 import React from 'react';
@@ -9,6 +10,8 @@ interface UserProps {
 }
 
 export function User({navigation}: UserProps) {
+  const usersName = useAppSelector(state => state.users.userName);
+
   const handleLogoutClick = async () => {
     await setTokenStorage('');
     navigation.replace('Login');
@@ -20,7 +23,7 @@ export function User({navigation}: UserProps) {
         <Card.Title>个人卡片</Card.Title>
         <View style={style.infoLine1}>
           <Avatar size={50} rounded source={require('@src/assets/user.png')} />
-          <Text style={style.userName}>{'tyt'}</Text>
+          <Text style={style.userName}>{usersName}</Text>
         </View>
       </Card>
       <Button

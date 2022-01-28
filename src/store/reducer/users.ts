@@ -2,17 +2,19 @@ import {createSlice} from '@reduxjs/toolkit';
 
 export interface UsersInfoType {
   token: string;
+  userName: string;
 }
 
 const initialState: UsersInfoType = {
   token: '',
+  userName: '',
 };
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    updateUsersToken(state, action) {
+    updateUsersInfo(state, action) {
       return {
         ...state,
         ...action.payload,
@@ -22,5 +24,5 @@ const usersSlice = createSlice({
 });
 
 const {actions, reducer} = usersSlice;
-export const {updateUsersToken} = actions;
+export const {updateUsersInfo} = actions;
 export default reducer;
